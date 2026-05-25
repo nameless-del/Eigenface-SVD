@@ -32,7 +32,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; line-height: 1.6; }
 
-          /* Sidebar Styles */
+        /* Sidebar Styles */
         .sidebar-left { width: 260px; background-color: var(--sidebar-bg); padding: 30px 20px; border-right: 1px solid var(--border-color); flex-shrink: 0; overflow-y: auto; }
         .profile-section { margin-bottom: 30px; padding-bottom: 25px; border-bottom: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; }
         .profile-pic { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 2px solid var(--active-item-bg); }
@@ -137,7 +137,7 @@
         <p>Selanjutnya, pustaka `numpy` di Python akan menghitung SVD secara numerik: $A_{centered} = U \Sigma V^T$. Vektor-vektor pada kolom $U$ (berukuran 4096) akan dilipat kembali menjadi matriks $64 \times 64$ untuk divisualisasikan sebagai gambar <strong>Eigenfaces</strong>.</p>
 
         <h2 class="section-title" id="sec-4">4. Analisis Jenis Matriks & Vektor</h2>
-        <p>Berdasarkan Ordo (Baris $\times$ Kolom), berikut adalah identifikasi aljabar linear dari sistem citra digital ini:</p>
+        <p>Based on Matrix order (Row $\times$ Column), berikut adalah identifikasi aljabar linear dari sistem citra digital ini:</p>
         
         <ul class="content-list">
             <li><strong>Vektor Wajah Input ($\mathbf{x}$):</strong> Memiliki ordo $4096 \times 1$. Ini disebut sebagai <strong>Vektor Kolom (Column Vector)</strong>.</li>
@@ -207,13 +207,22 @@
         </div>
 
         <h3 style="color:var(--text-heading); margin-top:15px; font-size:16px;">Langkah D: Mencari Vektor Eigenface Utama ($U$)</h3>
-        <p>Vektor basis utama kiri (Eigenface) dicari dengan cara menormalisasi hasil kali matriks data dengan vektor eigen kanan melalui hubungan formula:</p>
+        <p>Sebelum mencari komponen ruang wajah $U$, kita wajib menghitung <strong>Vektor Eigen Kanan ($\mathbf{v}_1$)</strong> dari nilai eigen terbesar ($\lambda_1 = 4$) melalui SPL karakteristik $(M - \lambda I)\mathbf{v} = 0$:</p>
+        <div class="equation-container">
+            $$\begin{bmatrix} 2-4 & -2 \\ -2 & 2-4 \end{bmatrix} \begin{bmatrix} v_x \\ v_y \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}$$
+            $$\begin{bmatrix} -2 & -2 \\ -2 & -2 \end{bmatrix} \begin{bmatrix} v_x \\ v_y \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} \implies -2v_x - 2v_y = 0 \implies v_x = -v_y$$
+        </div>
+        <p>Dengan mengambil nilai basis non-nol terkecil $v_x = 1$, diperoleh $v_y = -1$ sehingga membentuk vektor kolom mentah $\begin{bmatrix} 1 \\ -1 \end{bmatrix}$. Sesuai aturan SVD, vektor ini harus <strong>dinormalisasi</strong> menjadi vektor satuan dengan membaginya dengan panjang magnitudo ($\sqrt{1^2 + (-1)^2} = \sqrt{2}$):</p>
+        <div class="equation-container">
+            $$\mathbf{v}_1 = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 \\ -1 \end{bmatrix} = \begin{bmatrix} 1/\sqrt{2} \\ -1/\sqrt{2} \end{bmatrix}$$
+        </div>
+        <p>Setelah mendapatkan $\mathbf{v}_1$, komponen vektor utama kiri (Eigenface $\mathbf{u}_1$) diekstrak menggunakan hubungan formula dekomposisi:</p>
         <div class="equation-container">
             $$\mathbf{u}_1 = \frac{1}{\sigma_1} A \mathbf{v}_1$$
         </div>
-        <p>Setelah dihitung menggunakan basis vektor normalisasi $\mathbf{v}_1 = \begin{bmatrix} 1/\sqrt{2} \\ -1/\sqrt{2} \end{bmatrix}$, diperoleh kolom pertama untuk ruang wajah:</p>
+        <p>Substitusikan nilai matriks objek terpusat $A$, skalar $\sigma_1 = 2$, dan vektor satuan $\mathbf{v}_1$ yang didapat ke dalam perkalian aljabar linear:</p>
         <div class="equation-container">
-            $$\mathbf{u}_1 = \frac{1}{2} \begin{bmatrix} 1 & -1 \\ -1 & 1 \end{bmatrix} \begin{bmatrix} \frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}} \end{bmatrix} = \begin{bmatrix} \frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}} \end{bmatrix} \approx \begin{bmatrix} 0.707 \\ -0.707 \end{bmatrix}$$
+            $$\mathbf{u}_1 = \frac{1}{2} \begin{bmatrix} 1 & -1 \\ -1 & 1 \end{bmatrix} \begin{bmatrix} \frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}} \end{bmatrix} = \frac{1}{2} \begin{bmatrix} \frac{1}{\sqrt{2}} - (-\frac{1}{\sqrt{2}}) \\ -\frac{1}{\sqrt{2}} - \frac{1}{\sqrt{2}} \end{bmatrix} = \frac{1}{2} \begin{bmatrix} \frac{2}{\sqrt{2}} \\ -\frac{2}{\sqrt{2}} \end{bmatrix} = \begin{bmatrix} \frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}} \end{bmatrix} \approx \begin{bmatrix} 0.707 \\ -0.707 \end{bmatrix}$$
         </div>
         <p>Maka bentuk akhir Matriks Basis Ortogonal $U$ (Eigenface) di program adalah:</p>
         <div class="equation-container">
