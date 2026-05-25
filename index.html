@@ -170,7 +170,7 @@
         </ul>
         
         <div class="kotak-analogi" style="border-left-color: #28a745; background: #162419;">
-            <p><strong>Kesimpulan Inti untuk Presentasi Dosen:</strong> Melalui eksperimen ini, kita membuktikan fungsi SVD sebagai teknik <strong>Reduksi Dimensi (Kompresi Data)</strong> yang luar biasa. Kita tidak perlu menyimpan seluruh 400 dimensi vektor wajah ke memori database. Cukup dengan menyimpan <strong>150 komponen utama ($k=150$)</strong> saja, komputer sudah mampu mengenali dan memulihkan identitas wajah seseorang tanpa kehilangan informasi penting.</p>
+            <p><strong>Kesimpulan Inti:</strong> Melalui eksperimen ini, kita membuktikan fungsi SVD sebagai teknik <strong>Reduksi Dimensi (Kompresi Data)</strong> yang luar biasa. Kita tidak perlu menyimpan seluruh 400 dimensi vektor wajah ke memori database. Cukup dengan menyimpan <strong>150 komponen utama ($k=150$)</strong> saja, komputer sudah mampu mengenali dan memulihkan identitas wajah seseorang tanpa kehilangan informasi penting.</p>
         </div>
 
         <h2 class="section-title" id="sec-7">7. Simulasi Perhitungan Manual SVD (Matriks Wajah 2x2)</h2>
@@ -196,12 +196,12 @@
             $$(4 - 4\lambda + \lambda^2) - 4 = 0$$
             $$\lambda^2 - 4\lambda = 0 \implies \lambda(\lambda - 4) = 0$$
         </div>
-        <p>Maka didapatkan akar nilai eigen **$\lambda_1 = 4$** dan **$\lambda_2 = 0$**. Sesuai aturan SVD, Nilai Singular ($\sigma$) didapatkan dari akar kuadrat nilai eigen:</p>
+        <p>Maka didapatkan akar nilai eigen $\lambda_1 = 4$ dan $\lambda_2 = 0$. Sesuai aturan SVD, Nilai Singular ($\sigma$) didapatkan dari akar kuadrat nilai eigen:</p>
         <ul class="content-list">
             <li>$\sigma_1 = \sqrt{4} = 2$</li>
             <li>$\sigma_2 = \sqrt{0} = 0$</li>
         </ul>
-        <p>Sehingga terbentuklah susunan **Matriks Diagonal $\Sigma$**:</p>
+        <p>Sehingga terbentuklah susunan Matriks Diagonal $\Sigma$:</p>
         <div class="equation-container">
             $$\Sigma = \begin{bmatrix} 2 & 0 \\ 0 & 0 \end{bmatrix}$$
         </div>
@@ -215,11 +215,11 @@
         <div class="equation-container">
             $$\mathbf{u}_1 = \frac{1}{2} \begin{bmatrix} 1 & -1 \\ -1 & 1 \end{bmatrix} \begin{bmatrix} \frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}} \end{bmatrix} = \begin{bmatrix} \frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}} \end{bmatrix} \approx \begin{bmatrix} 0.707 \\ -0.707 \end{bmatrix}$$
         </div>
-        <p>Maka bentuk akhir **Matriks Basis Ortogonal $U$ (Eigenface)** di program adalah:</p>
+        <p>Maka bentuk akhir Matriks Basis Ortogonal $U$ (Eigenface) di program adalah:</p>
         <div class="equation-container">
             $$U = \begin{bmatrix} 0.707 & 0.707 \\ -0.707 & 0.707 \end{bmatrix}$$
         </div>
-        <p>Nilai desimal desimal $0.707$ ini terbukti bernilai **sama persis 100%** dengan angka keluaran visual pada kotak simulasi hijau di aplikasi interaktif.</p>
+        <p>Nilai desimal desimal $0.707$ ini terbukti bernilai sama persis 100% dengan angka keluaran visual pada kotak simulasi hijau di aplikasi interaktif.</p>
 
         <div class="wadah-tombol-bawah">
             <a href="https://colab.research.google.com/drive/1jzx3PL3GcclznnudfaojPeo6Y3HPxAwS?usp=sharing" target="_blank" class="btn-simulasi">
